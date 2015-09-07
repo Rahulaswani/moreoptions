@@ -1,9 +1,12 @@
 package co.moreoptions.shopping;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import co.moreoptions.shopping.core.ReadDataService;
 
 public class MainActivity extends Activity {
 
@@ -11,6 +14,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent serviceIntent = new Intent(this, ReadDataService.class);
+        startService(serviceIntent);
     }
 
     @Override
