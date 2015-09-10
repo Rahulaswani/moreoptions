@@ -6,4 +6,9 @@
 
     <string name="accessibility_query_window_description">App Accessibility Service</string>
 
+    <string-array name="packages_array">
+        <item>com.whatsapp</item>
+        <item>com.flipkart.android</item>
+    </string-array>
+
 </resources>

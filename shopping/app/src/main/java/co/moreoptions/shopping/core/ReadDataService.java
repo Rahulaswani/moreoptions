@@ -1,61 +1,80 @@
 package co.moreoptions.shopping.core;
 
 /**
- * Created by 11101 on 08/09/15.
+ * Created by anshul on 08/09/15.
  */
 
 import android.accessibilityservice.AccessibilityService;
+import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityRecord;
+import android.widget.Toast;
 
 import java.util.Locale;
+
+import co.moreoptions.shopping.MainActivity;
 
 
 /**
  * This class demonstrates how an accessibility service can query
- * window content to improve the feedback given to the user.
+ * window content .
  */
 public class ReadDataService extends AccessibilityService implements TextToSpeech.OnInitListener {
 
-    /** Tag for logging. */
+    /**
+     * Tag for logging.
+     */
     private static final String LOG_TAG = "ReadDataService/onAccessibilityEvent";
 
-    /** Comma separator. */
+    /**
+     * Comma separator.
+     */
     private static final String SEPARATOR = ", ";
 
-    /** The class name of TaskListView - for simplicity we speak only its items. */
+    /**
+     * The class name of TaskListView - for simplicity we speak only its items.
+     */
     private static final String TASK_LIST_VIEW_CLASS_NAME =
             "com.example.android.apis.accessibility.TaskListView";
 
-    /** Flag whether Text-To-Speech is initialized. */
+    /**
+     * Flag whether Text-To-Speech is initialized.
+     */
     private boolean mTextToSpeechInitialized;
 
-    /** Handle to the Text-To-Speech engine. */
-    private TextToSpeech mTts;
 
+    private static ReadDataService sSharedInstance;
+
+    private StringBuffer readDataString = new StringBuffer("");
+
+    private int index;
     /**
      * {@inheritDoc}
      */
     @Override
     public void onServiceConnected() {
-        // Initializes the Text-To-Speech engine as soon as the service is connected.
-        mTts = new TextToSpeech(getApplicationContext(), this);
+        sSharedInstance = this;
     }
 
+    @Override
+    public boolean onUnbind(Intent intent) {
+        sSharedInstance = null;
+        return super.onUnbind(intent);
+    }
+
+    public static ReadDataService getSharedInstance() {
+        return sSharedInstance;
+    }
     /**
      * Processes an AccessibilityEvent, by traversing the View's tree and
      * putting together a message to speak to the user.
      */
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        if (!mTextToSpeechInitialized) {
-            Log.e(LOG_TAG, "Text-To-Speech engine not ready.  Bailing out.");
-            return;
-        }
 
         // This AccessibilityNodeInfo represents the view that fired the
         // AccessibilityEvent. The following code will use it to traverse the
@@ -70,10 +89,28 @@ public class ReadDataService extends AccessibilityService implements TextToSpeec
             return;
         }
 
+        int count = source.getChildCount();
+        for (int i = 0; i < count; i++) {
+            AccessibilityNodeInfo source1 = source.getChild(i);
+            if (source1.getText() == null) {
+                int count2 = source1.getChildCount();
+                for (int j = 0; j < count2; j++) {
+                    AccessibilityNodeInfo source2 = source1.getChild(j);
+                    if (source2 != null && source2.getText() != null) {
+                        Log.d(LOG_TAG, source2.getText().toString());
+                        readDataString.append(source2.getText().toString());
+                        checkContent();
+                    }
+                }
+            }
+            else {
+                Log.d(LOG_TAG, source1.getText().toString());
+                readDataString.append(source1.getText().toString());
+                checkContent();
+            }
 
-
-
-        if(source.getText() == null){
+        }
+        if (source.getText() == null) {
             return;
         }
         CharSequence taskLabel = source.getText();
@@ -94,9 +131,24 @@ public class ReadDataService extends AccessibilityService implements TextToSpeec
             }
         }
 
-        // Announce the utterance.
-        mTts.speak(utterance.toString(), TextToSpeech.QUEUE_FLUSH, null);
-        Log.d(LOG_TAG, utterance.toString());
+        Log.d(LOG_TAG, taskStr);
+        checkContent();
+        readDataString.append(taskStr);
+
+
+    }
+
+    private void checkContent(){
+        index++;
+        if(index >= 200) {
+            index = 0;
+
+            Intent dialogIntent = new Intent(this, MainActivity.class);
+            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            dialogIntent.putExtra("data",readDataString.toString());
+            startActivity(dialogIntent);
+            //Toast.makeText(getApplicationContext(), readDataString, Toast.LENGTH_LONG).show();
+        }
     }
 
     private AccessibilityNodeInfo getListItemNodeInfo(AccessibilityNodeInfo source) {
@@ -129,12 +181,6 @@ public class ReadDataService extends AccessibilityService implements TextToSpeec
      */
     @Override
     public void onInit(int status) {
-        // Set a flag so that the TaskBackService knows that the Text-To-Speech
-        // engine has been initialized, and can now handle speaking requests.
-        if (status == TextToSpeech.SUCCESS) {
-            mTts.setLanguage(Locale.US);
-            mTextToSpeechInitialized = true;
-        }
     }
 
     /**
@@ -143,8 +189,5 @@ public class ReadDataService extends AccessibilityService implements TextToSpeec
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mTextToSpeechInitialized) {
-            mTts.shutdown();
-        }
     }
 }
