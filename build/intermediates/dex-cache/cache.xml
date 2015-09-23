@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/jars/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-805fca90f162ea4809d3d0c68f83d6fee7fce8d4.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2dd7b1a9ea65bb03d9cd16df777eeaf537a1fc81">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-a79ec76971ef1a5634a4a5a4c1ade27fed52b003.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.crashlytics.sdk.android/beta/1.1.3/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b7a78990c10481f43cb4909f535ef4f11e60f1ab">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-8e6d87389ced9183f2a88ee8080f734dcb301277.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.mixpanel.android/mixpanel-android/4.6.4/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0adb9447509bdd9a674c1c3e7e5ee996247df478">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-74455fa10800c6dc093860d31b4f830ce55e382b.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-58d9d19e851aff3896dc64f5dad9e62889ec8e50.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics-core/2.3.5/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d18ba1d0eff55680fdf9a35f70a6091e4bc1adcb">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-1b6a8ed18fe58d7a39835e0488d63433da8bca79.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-9389f162db949b482bd942c907f2c483c1385cf3.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-9527cb63bb351a90699bee534dd9f4a74f52acb6.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-000333d47ce61e84e2b268045dc0c70ad87d8497.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/io.fabric.sdk.android/fabric/1.3.6/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fc82596d7f7683c8b3a7e5715a2ed5295c586887">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-e473039eb8114f9b91bfe5ff34493a07268fccc6.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics/2.5.2/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0c7f9fb9a729166c69fa585e01be2fe8fab4f45c">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-55822f2faeab66bd758b0f2fc0ae1426c21e9018.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/work/moreoptions/app/build/intermediates/exploded-aar/com.crashlytics.sdk.android/answers/1.3.2/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e99413cdc93bd7b001d312a4a33d25ac21042f69">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/classes-fc1e34cd6ca29c9f7c005ff75015e7f70ce7f46e.jar" />
+    </item>
+    <item
+        jar="/Users/aswani/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/aswani/work/moreoptions/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-673ff085345ad5cc92fee574769d8a5f309766f1.jar" />
+    </item>
+
+</items>

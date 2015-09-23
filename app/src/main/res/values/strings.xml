@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Shopping</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="accessibility_query_window_description">App Accessibility Service</string>
+    <string name="mixipanel_token">7feec71280e4cf5dbddcb179dda380e0</string>
+    <string name="facebook_app_id">1640167976239972</string>
+</resources>
