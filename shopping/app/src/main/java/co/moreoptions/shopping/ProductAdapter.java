@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.moreoptions.shopping.core.ProductDetailViewHolder;
+import co.moreoptions.shopping.core.models.response.Product;
 
 /**
  * Created by anshul on 11/09/15.
@@ -15,16 +17,11 @@ import co.moreoptions.shopping.core.ProductDetailViewHolder;
 public class ProductAdapter extends RecyclerView.Adapter<ProductDetailViewHolder>{
     private static final String TAG = ProductAdapter.class.getSimpleName();
 
-    //private ArrayList<Product> products;
-    private ArrayList<String> mDataList = new ArrayList<>();
+    private List<Product> mDataList = new ArrayList<>();
 
-    public ProductAdapter(ArrayList<String> dataList){
+    public ProductAdapter(List<Product> dataList){
         mDataList = dataList;
     }
-//    public void updateProducts( ArrayList<Product> products){
-//        this.products = products;
-//        notifyDataSetChanged();
-//    }
 
     @Override
     public ProductDetailViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -35,9 +32,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductDetailViewHolder
 
     @Override
     public void onBindViewHolder(ProductDetailViewHolder holder, int position) {
-//        Product product = products.get(position);
-//        holder.onBind(product);
-
         holder.onBind(mDataList.get(position));
     }
 

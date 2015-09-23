@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.moreoptions.shopping.core.ReadDataService;
+import co.moreoptions.shopping.core.models.response.ProductList;
 
 public class MainActivity extends Activity {
 
@@ -33,28 +34,25 @@ public class MainActivity extends Activity {
         ButterKnife.inject(this);
         Intent serviceIntent = new Intent(this, ReadDataService.class);
         startService(serviceIntent);
-
         readDataService = ReadDataService.getSharedInstance();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            setRecyclerView(extras);
+        }
+    }
 
-        productAdapter = new ProductAdapter(convertStringArrayToArraylist(getIntent().getStringExtra("data")+""));
+    private void setRecyclerView(Bundle extras){
+        ProductList productList = (ProductList) extras.getSerializable("data");
+        if(productList.getProducts() == null){
+            return;
+        }
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.
+                HORIZONTAL, false);
+        productAdapter = new ProductAdapter(productList.getProducts());
         productRack.setLayoutManager(linearLayoutManager);
         productRack.addItemDecoration(new ItemSpacingDecoration(11));
         productRack.setAdapter(productAdapter);
-
-
-    }
-
-    public static ArrayList<String> convertStringArrayToArraylist(String strArr) {
-        ArrayList<String> stringList = new ArrayList<String>();
-        int index = 0;
-        for (int i=0;i<strArr.length();i++) {
-            if (i % 10 == 0) {
-                stringList.add(strArr.charAt(i)+"");
-            }
-        }
-        return stringList;
     }
 
     @Override
@@ -91,7 +89,7 @@ public class MainActivity extends Activity {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             int position = parent.getChildAdapterPosition(view);
-            if(position < 0 ){
+            if (position < 0) {
                 return;
             }
             outRect.right = space;
