@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:packageNames="com.snapdeal.main,in.amazon.mShop.android.shopping,com.jabong.android,
+    com.app.wooplr,com.shopclues,com.myntra.android,com.yebhi,net.one97.paytm,com.flipkart.android,
+    com.shopping.limeroad,com.yepme,com.infibeam.infibeamapp,com.lazada.android,com.zopperapp
+    in.shoppingwish.scandid,com.couponrani.android,com.mob91,com.ebay.mobile,com.app.buyhatke
+    com.homeshop18.activity,com.voonik.android,com.buyingiq.app,com.goibibo"
+    android:accessibilityFeedbackType="feedbackSpoken"
+    android:notificationTimeout="100"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/accessibility_query_window_description" />

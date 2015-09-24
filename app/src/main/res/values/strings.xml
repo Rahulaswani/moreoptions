@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Shopping</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="accessibility_query_window_description">More Options</string>
+
+     TODO : this has to be cleared as in old chode this was being used
+
+    <!--<string name="accessibility_query_window_description">App Accessibility Service</string>-->
+    <string name="mixipanel_token">7feec71280e4cf5dbddcb179dda380e0</string>
+    <string name="facebook_app_id">1640167976239972</string>
+
+    <string-array name="packages_array">
+       <!-- <item>com.whatsapp</item>-->
+        <item>in.amazon.mShop.android.shopping</item>
+        <item>com.roposo.android</item>
+        <item>com.flipkart.android</item>
+    </string-array>
+
+</resources>
