@@ -27,9 +27,21 @@ android {
         versionName "1.0"
     }
     buildTypes {
-        release {
+        debug {
+            debuggable true
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+            buildConfigField "boolean", "DEBUG_MODE", "true"
+            buildConfigField "boolean", "ENABLE_MIXPANEL", "false"
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        release {
+            buildConfigField "boolean", "DEBUG_MODE", "false"
+            buildConfigField "boolean", "ENABLE_MIXPANEL", "true"
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 }

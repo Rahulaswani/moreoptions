@@ -5,12 +5,20 @@ import android.content.Context;
 import android.os.Handler;
 import android.view.ViewConfiguration;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
+import co.moreoptions.shopping.analytics.MixpanelAnalytics;
+import co.moreoptions.shopping.app.MOLog;
 import co.moreoptions.shopping.core.http.BaseApi;
 import co.moreoptions.shopping.core.http.HttpConstants;
+import io.fabric.sdk.android.Fabric;
 import retrofit.RestAdapter;
 
 /**
@@ -29,6 +37,9 @@ public class MoreOptionsApplication extends Application {
     private static Context sStaticContext;
     private BaseApi mBaseApi;
     public static volatile Handler applicationHandler = null;
+
+    private MixpanelAPI mMixpanel;
+
     /**
      * Gets a reference to the application context
      */
@@ -48,6 +59,17 @@ public class MoreOptionsApplication extends Application {
         overrideHardwareMenuButton();
         applicationHandler = new Handler(sStaticContext.getMainLooper());
         Fresco.initialize(this);
+        //initialize mixpanel
+        String projectToken = getResources().getString(R.string.mixipanel_token);
+
+        Fabric.with(this, new Crashlytics());
+        mMixpanel = MixpanelAPI.getInstance(this, projectToken);
+        trackApplaunch();
+
+    }
+
+    void trackApplaunch(){
+        MixpanelAnalytics.getInstance().onAppLaunched(true);
     }
 
     /**

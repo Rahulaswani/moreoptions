@@ -12,6 +12,7 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import co.moreoptions.shopping.analytics.MixpanelAnalytics;
 import co.moreoptions.shopping.app.MOLog;
 import co.moreoptions.shopping.core.ReadDataService;
 import com.crashlytics.android.Crashlytics;
@@ -27,6 +28,8 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends Activity {
 
+    public static final String TAG = MainActivity.class.getSimpleName();
+
     private ReadDataService readDataService;
 
     private ProductAdapter productAdapter;
@@ -34,15 +37,10 @@ public class MainActivity extends Activity {
     @InjectView(R.id.productRack)
     RecyclerView productRack;
 
-    private MixpanelAPI mixpanel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-        String projectToken = getResources().getString(R.string.mixipanel_token);
-        mixpanel = MixpanelAPI.getInstance(this, projectToken);
         ButterKnife.inject(this);
         Intent serviceIntent = new Intent(this, ReadDataService.class);
         startService(serviceIntent);
@@ -52,8 +50,12 @@ public class MainActivity extends Activity {
         if(extras != null) {
             setRecyclerView(extras);
         }
+    }
 
-        trackApplaunch();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MixpanelAnalytics.getInstance().onScreenOpened(TAG);
     }
 
     private void setRecyclerView(Bundle extras){
@@ -74,16 +76,6 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    void trackApplaunch(){
-        try {
-            JSONObject props = new JSONObject();
-            props.put("App Launched", true);
-            mixpanel.track("MainActivity - onCreate called", props);
-        } catch (JSONException e) {
-            MOLog.e("MYAPP", "Unable to add properties to JSONObject", e);
-        }
     }
 
     @Override
