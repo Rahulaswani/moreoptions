@@ -8,17 +8,26 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityRecord;
+import android.widget.ImageView;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import co.moreoptions.shopping.MainActivity;
+import co.moreoptions.shopping.R;
+import co.moreoptions.shopping.ThroughResultsActivity;
 import co.moreoptions.shopping.core.http.RequestListener;
 import co.moreoptions.shopping.core.models.request.ValuesBatchModel;
 import co.moreoptions.shopping.core.models.response.Product;
@@ -52,6 +61,10 @@ public class ReadDataService extends AccessibilityService {
 
     private ValueBatchHelper mValueBatchHelper;
 
+    private WindowManager windowManager;
+    private FloatingActionButton mFloatingActionButton;
+
+
     /**
      * {@inheritDoc}
      */
@@ -76,9 +89,33 @@ public class ReadDataService extends AccessibilityService {
         return super.onUnbind(intent);
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        mFloatingActionButton = (FloatingActionButton) li.inflate(R.layout.floating_action_button, null);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+        params.x = 0;
+        params.y = 100;
+        windowManager.addView(mFloatingActionButton, params);
+        mFloatingActionButton.setVisibility(View.GONE);
+
+
+    }
+
     public static ReadDataService getSharedInstance() {
         return sSharedInstance;
     }
+
 
     /**
      * Processes an AccessibilityEvent, by traversing the View's tree and
@@ -87,14 +124,30 @@ public class ReadDataService extends AccessibilityService {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+
+        if(event.getEventType() == AccessibilityEvent.TYPE_VIEW_FOCUSED){
+            mFloatingActionButton.setVisibility(View.GONE);
+        }
         AccessibilityNodeInfo source = event.getSource();
         if (source == null) {
             return;
         }
         String packageName = "";
 
+
         int count = source.getChildCount();
         packageName = source.getPackageName().toString();
+
+
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendValues();
+                mFloatingActionButton.setVisibility(View.GONE);
+            }
+        });
+
+
         for (int i = 0; i < count; i++) {
             AccessibilityNodeInfo source1 = source.getChild(i);
 
@@ -106,6 +159,7 @@ public class ReadDataService extends AccessibilityService {
                         Log.d(LOG_TAG, source2.getText().toString() + " " +
                                 source2.getViewIdResourceName());
                         if (mValueBatchHelper.checkForBatchStart(source2.getViewIdResourceName())) {
+                            mFloatingActionButton.setVisibility(View.VISIBLE);
                             mValueBatchHelper.setIsBatching(true);
                         }
                         if (mValueBatchHelper.isBatching() && source1.getText() != null) {
@@ -122,6 +176,7 @@ public class ReadDataService extends AccessibilityService {
                 readDataString.append(source1.getText().toString());
                 if (mValueBatchHelper.checkForBatchStart(source1.getViewIdResourceName())) {
                     mValueBatchHelper.setIsBatching(true);
+                    mFloatingActionButton.setVisibility(View.VISIBLE);
                 }
                 if (mValueBatchHelper.isBatching() && source1.getText() != null) {
                     checkContent(packageName, source1.getViewIdResourceName(),
@@ -153,6 +208,7 @@ public class ReadDataService extends AccessibilityService {
 
         Log.d(LOG_TAG, taskStr);
         if (mValueBatchHelper.checkForBatchStart(source.getViewIdResourceName())) {
+            mFloatingActionButton.setVisibility(View.VISIBLE);
             mValueBatchHelper.setIsBatching(true);
         }
         if (mValueBatchHelper.isBatching() && source.getText() != null) {
@@ -177,39 +233,36 @@ public class ReadDataService extends AccessibilityService {
         index++;
         mValueBatchHelper.addValues(packageName, id, value, index + "");
         if (index >= 50) {
-            mValueBatchHelper.setShouldBatch(true);
-
-            index = 0;
-
-            SendBatchService sendBatchService = new SendBatchService();
-            sendBatchService.postValues(mValueBatchHelper.getFinalRequestBody(), new RequestListener() {
-                @Override
-                public void onRequestFailure(Exception e) {
-                    mValueBatchHelper.clearBatch();
-                    Intent dialogIntent = new Intent(ReadDataService.this, MainActivity.class);
-                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    dialogIntent.putExtra("data", readDataString.toString());
-                    startActivity(dialogIntent);
-                }
-
-                @Override
-                public void onRequestSuccess(Object jsonObject) {
-                    List<Product> products = (List<Product>) jsonObject;
-                    ProductList productList = new ProductList();
-                    productList.setProducts(products);
-                    if(products.size()>0) {
-                        mValueBatchHelper.clearBatch();
-                        Intent dialogIntent = new Intent(ReadDataService.this, MainActivity.class);
-                        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Bundle arguments = new Bundle();
-                        arguments.putSerializable("data", productList);
-                        dialogIntent.putExtras(arguments);
-                        startActivity(dialogIntent);
-                    }
-                }
-            });
-            mValueBatchHelper.setIsBatching(false);
+            //sendValues();
         }
     }
 
+    private void sendValues() {
+        mValueBatchHelper.setShouldBatch(true);
+        index = 0;
+        SendBatchService sendBatchService = new SendBatchService();
+        sendBatchService.postValues(mValueBatchHelper.getFinalRequestBody(), new RequestListener() {
+            @Override
+            public void onRequestFailure(Exception e) {
+                mValueBatchHelper.clearBatch();
+            }
+
+            @Override
+            public void onRequestSuccess(Object jsonObject) {
+                List<Product> products = (List<Product>) jsonObject;
+                ProductList productList = new ProductList();
+                productList.setProducts(products);
+                if (products.size() > 0) {
+                    mValueBatchHelper.clearBatch();
+                    Intent dialogIntent = new Intent(ReadDataService.this, ThroughResultsActivity.class);
+                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Bundle arguments = new Bundle();
+                    arguments.putSerializable("data", productList);
+                    dialogIntent.putExtras(arguments);
+                    startActivity(dialogIntent);
+                }
+            }
+        });
+        mValueBatchHelper.setIsBatching(false);
+    }
 }

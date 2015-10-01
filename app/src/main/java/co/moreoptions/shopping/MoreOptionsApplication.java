@@ -38,8 +38,6 @@ public class MoreOptionsApplication extends Application {
     private BaseApi mBaseApi;
     public static volatile Handler applicationHandler = null;
 
-    private MixpanelAPI mMixpanel;
-
     /**
      * Gets a reference to the application context
      */
@@ -62,8 +60,9 @@ public class MoreOptionsApplication extends Application {
         //initialize mixpanel
         String projectToken = getResources().getString(R.string.mixipanel_token);
 
-        Fabric.with(this, new Crashlytics());
-        mMixpanel = MixpanelAPI.getInstance(this, projectToken);
+        if(BuildConfig.ENABLE_CRASHYLICS) {
+            Fabric.with(this, new Crashlytics());
+        }
         trackApplaunch();
 
     }

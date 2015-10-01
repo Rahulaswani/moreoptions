@@ -26,9 +26,9 @@ import org.json.JSONObject;
 import co.moreoptions.shopping.core.models.response.ProductList;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends Activity {
+public class ThroughResultsActivity extends Activity {
 
-    public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = ThroughResultsActivity.class.getSimpleName();
 
     private ReadDataService readDataService;
 
@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
 
     private void setRecyclerView(Bundle extras){
         ProductList productList = (ProductList) extras.getSerializable("data");
-        if(productList.getProducts() == null){
+        if(productList == null || productList.getProducts() == null){
             return;
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.
@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
         private int density;
 
         public ItemSpacingDecoration(int space) {
-            density = (int) MainActivity.this.getResources().getDisplayMetrics().density;
+            density = (int) ThroughResultsActivity.this.getResources().getDisplayMetrics().density;
             this.space = space * density;
         }
 
