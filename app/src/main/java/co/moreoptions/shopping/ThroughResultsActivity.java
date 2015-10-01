@@ -18,6 +18,8 @@ import co.moreoptions.shopping.core.ReadDataService;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.appevents.AppEventsLogger;
 
+import com.leanplum.Leanplum;
+import com.leanplum.LeanplumPushService;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONException;
@@ -45,11 +47,24 @@ public class ThroughResultsActivity extends Activity {
         Intent serviceIntent = new Intent(this, ReadDataService.class);
         startService(serviceIntent);
         readDataService = ReadDataService.getSharedInstance();
-
+        initializeLLeanPlum();
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             setRecyclerView(extras);
         }
+    }
+
+    private void initializeLLeanPlum(){
+        if (BuildConfig.DEBUG) {
+            Leanplum.setAppIdForDevelopmentMode(getResources().getString(R.string.leanplum_application_id),
+                    "dev_Iryz153NngA50atKvda6WcxyaadAM1GYGkrGdF1u17k");
+        } else {
+            Leanplum.setAppIdForProductionMode(getResources().getString(R.string.leanplum_application_id),
+                    getResources().getString(R.string.leanplum_prod_access_key));
+        }
+        LeanplumPushService.setGcmSenderId(LeanplumPushService.LEANPLUM_SENDER_ID);
+        Leanplum.enableVerboseLoggingInDevelopmentMode();
+        Leanplum.start(this);
     }
 
     @Override
