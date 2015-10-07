@@ -12,6 +12,7 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "http://www.leanplum.com/leanplum-sdks/" }
 }
 
 
@@ -33,7 +34,7 @@ android {
             versionNameSuffix '-debug'
             buildConfigField "boolean", "DEBUG_MODE", "true"
             buildConfigField "boolean", "ENABLE_MIXPANEL", "false"
-            buildConfigField "boolean", "ENABLE_CRASHYLICS","false"
+            buildConfigField "boolean", "ENABLE_CRASHYLICS","true"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
@@ -54,6 +55,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
    // compile 'com.android.support:customtabs:23.0.0'
+    compile 'com.leanplum:Leanplum:1.2.16'
     compile "com.mixpanel.android:mixpanel-android:4.6.4"
     compile "com.google.android.gms:play-services:3.1+"
     compile 'com.android.support:support-v13:23.0.0'

@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#Leanplum
+-keepclassmembers class * { @com.leanplum.annotations.* <fields>; }
+
+-keep class com.leanplum.** { *; }
+-dontwarn com.leanplum.**

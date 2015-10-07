@@ -4,9 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.view.ViewConfiguration;
-
+import android.content.res.Resources;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.leanplum.Leanplum;
+import com.leanplum.LeanplumActivityHelper;
+import com.leanplum.LeanplumPushService;
+import com.leanplum.LeanplumResources;
+import com.leanplum.annotations.Parser;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONException;
@@ -51,20 +56,26 @@ public class MoreOptionsApplication extends Application {
 
     @Override
     public void onCreate() {
+        Leanplum.setApplicationContext(this);
+        Parser.parseVariables(this);
+        LeanplumActivityHelper.enableLifecycleCallbacks(this);
         super.onCreate();
-
         sStaticContext = getApplicationContext();
+        if(BuildConfig.ENABLE_CRASHYLICS) {
+            Fabric.with(this, new Crashlytics());
+        }
         overrideHardwareMenuButton();
         applicationHandler = new Handler(sStaticContext.getMainLooper());
         Fresco.initialize(this);
         //initialize mixpanel
         String projectToken = getResources().getString(R.string.mixipanel_token);
-
-        if(BuildConfig.ENABLE_CRASHYLICS) {
-            Fabric.with(this, new Crashlytics());
-        }
         trackApplaunch();
 
+    }
+
+    @Override
+    public Resources getResources() {
+        return new LeanplumResources(super.getResources());
     }
 
     void trackApplaunch(){
