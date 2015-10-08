@@ -13,7 +13,6 @@ public class ValueBatchHelper {
     private ValuesBatchModel mValueBatchModel = new ValuesBatchModel();
     private boolean isBatching;
     private boolean shouldBatch = true;
-    private List<Values> valuesList = new ArrayList<>();
 
     public void ValuesBatchModel(){
     }
@@ -44,36 +43,17 @@ public class ValueBatchHelper {
         }
     }
 
-    public void addValues(String appName, String id, String value, String index){
-        if(isBatching) {
-
-            if(id == null) {
-                return;
-            }
-
-            String[] splitString = id.split("/");
-            mValueBatchModel.setAppName(appName);
-            Values values = new Values();
-            if(splitString[1] != null) {
-                values.setId(splitString[1]);
-            }
-            else {
-                values.setId("");
-            }
-            //values.setSeqNum(index);
-            values.setValue(value);
-            valuesList.add(values);
-        }
+    public void addValue(String appName, String value){
+        mValueBatchModel.setAppName(appName);
+        mValueBatchModel.setProductName(value);
     }
 
     public ValuesBatchModel getFinalRequestBody(){
-        mValueBatchModel.setValues(valuesList);
         return mValueBatchModel;
     }
 
     public void clearBatch(){
         setIsBatching(false);
-        valuesList.clear();
         mValueBatchModel = new ValuesBatchModel();
     }
 }

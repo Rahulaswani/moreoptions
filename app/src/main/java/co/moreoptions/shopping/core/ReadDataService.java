@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,8 +18,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.accessibility.AccessibilityRecord;
-import android.widget.ImageView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -29,7 +26,6 @@ import java.util.List;
 import co.moreoptions.shopping.R;
 import co.moreoptions.shopping.ThroughResultsActivity;
 import co.moreoptions.shopping.core.http.RequestListener;
-import co.moreoptions.shopping.core.models.request.ValuesBatchModel;
 import co.moreoptions.shopping.core.models.response.Product;
 import co.moreoptions.shopping.core.models.response.ProductList;
 import co.moreoptions.shopping.core.services.SendBatchService;
@@ -37,7 +33,7 @@ import co.moreoptions.shopping.core.services.SendBatchService;
 
 /**
  * This class demonstrates how an accessibility service can query
- * window content .
+ * window content.
  */
 public class ReadDataService extends AccessibilityService {
 
@@ -49,21 +45,12 @@ public class ReadDataService extends AccessibilityService {
     /**
      * Comma separator.
      */
-    private static final String SEPARATOR = ", ";
-
     private static ReadDataService sSharedInstance;
-
-    private StringBuffer readDataString = new StringBuffer("");
-
-    private int index;
-
-    private ValuesBatchModel mValueBatchModel = new ValuesBatchModel();
 
     private ValueBatchHelper mValueBatchHelper;
 
     private WindowManager windowManager;
     private FloatingActionButton mFloatingActionButton;
-
 
     /**
      * {@inheritDoc}
@@ -74,8 +61,6 @@ public class ReadDataService extends AccessibilityService {
         mValueBatchHelper = new ValueBatchHelper();
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.flags = AccessibilityServiceInfo.DEFAULT |
-                AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS |
-                AccessibilityServiceInfo.FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY |
                 AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS |
                 AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
@@ -109,7 +94,6 @@ public class ReadDataService extends AccessibilityService {
         windowManager.addView(mFloatingActionButton, params);
         mFloatingActionButton.setVisibility(View.GONE);
 
-
     }
 
     public static ReadDataService getSharedInstance() {
@@ -132,12 +116,6 @@ public class ReadDataService extends AccessibilityService {
         if (source == null) {
             return;
         }
-        String packageName = "";
-
-
-        int count = source.getChildCount();
-        packageName = source.getPackageName().toString();
-
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,81 +125,21 @@ public class ReadDataService extends AccessibilityService {
             }
         });
 
-
-        for (int i = 0; i < count; i++) {
-            AccessibilityNodeInfo source1 = source.getChild(i);
-
-            if (source1.getText() == null) {
-                int count2 = source1.getChildCount();
-                for (int j = 0; j < count2; j++) {
-                    AccessibilityNodeInfo source2 = source1.getChild(j);
-                    if (source2 != null && source2.getText() != null) {
-                        Log.d(LOG_TAG, source2.getText().toString() + " " +
-                                source2.getViewIdResourceName());
-                        if (mValueBatchHelper.checkForBatchStart(source2.getViewIdResourceName())) {
-                            mFloatingActionButton.setVisibility(View.VISIBLE);
-                            mValueBatchHelper.setIsBatching(true);
-                        }
-                        if (mValueBatchHelper.isBatching() && source1.getText() != null) {
-                            checkContent(packageName, source1.getViewIdResourceName(),
-                                    source1.getText().toString());
-                        }
-                        readDataString.append(source2.getText().toString());
-                    }
-                }
-            } else {
-                Log.d(LOG_TAG, source1.getText().toString() + " " + source1.getViewIdResourceName());
-                mValueBatchHelper.addValues(packageName, source1.getViewIdResourceName(),
-                        source1.getText().toString(), index + "");
-                readDataString.append(source1.getText().toString());
-                if (mValueBatchHelper.checkForBatchStart(source1.getViewIdResourceName())) {
-                    mValueBatchHelper.setIsBatching(true);
-                    mFloatingActionButton.setVisibility(View.VISIBLE);
-                }
-                if (mValueBatchHelper.isBatching() && source1.getText() != null) {
-                    checkContent(packageName, source1.getViewIdResourceName(),
-                            source1.getText().toString());
-                }
-            }
-
-        }
         if (source.getText() == null) {
             return;
         }
         CharSequence taskLabel = source.getText() + " " + source.getViewIdResourceName();
 
-
         String taskStr = taskLabel.toString();
-        StringBuilder utterance = new StringBuilder(taskStr);
-
-        // The custom ListView added extra context to the event by adding an
-        // AccessibilityRecord to it. Extract that from the event and read it.
-        final int records = event.getRecordCount();
-        for (int i = 0; i < records; i++) {
-            AccessibilityRecord record = event.getRecord(i);
-            CharSequence contentDescription = record.getContentDescription();
-            if (!TextUtils.isEmpty(contentDescription)) {
-                utterance.append(SEPARATOR);
-                utterance.append(contentDescription);
-            }
-        }
 
         Log.d(LOG_TAG, taskStr);
         if (mValueBatchHelper.checkForBatchStart(source.getViewIdResourceName())) {
             mFloatingActionButton.setVisibility(View.VISIBLE);
             mValueBatchHelper.setIsBatching(true);
-        }
-        if (mValueBatchHelper.isBatching() && source.getText() != null) {
-            checkContent(source.getPackageName().toString(), source.getViewIdResourceName(),
+            checkContent(source.getPackageName().toString(),
                     source.getText().toString());
         }
-        readDataString.append(taskStr);
 
-
-    }
-
-    public ValueBatchHelper getValueBatchHelper() {
-        return mValueBatchHelper;
     }
 
     @Override
@@ -229,17 +147,12 @@ public class ReadDataService extends AccessibilityService {
 
     }
 
-    private void checkContent(String packageName, String id, String value) {
-        index++;
-        mValueBatchHelper.addValues(packageName, id, value, index + "");
-        if (index >= 50) {
-            //sendValues();
-        }
+    private void checkContent(String packageName, String value) {
+        mValueBatchHelper.addValue(packageName, value);
     }
 
     private void sendValues() {
         mValueBatchHelper.setShouldBatch(true);
-        index = 0;
         SendBatchService sendBatchService = new SendBatchService();
         sendBatchService.postValues(mValueBatchHelper.getFinalRequestBody(), new RequestListener() {
             @Override

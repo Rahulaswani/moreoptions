@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by anshul on 17/09/15.
@@ -13,10 +14,10 @@ public class Product implements Serializable{
     public String productName;
 
     @SerializedName("productSellingPrice")
-    public ProductPrice productSellingPrice;
+    public String productSellingPrice;
 
     @SerializedName("productImageUrls")
-    public ImageList imageUrlList;
+    public List<String> imageUrlList;
 
     @SerializedName("appName")
     public String appName;

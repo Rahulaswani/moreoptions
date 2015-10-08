@@ -37,8 +37,8 @@ public class ProductDetailViewHolder extends RecyclerView.ViewHolder{
 
     public void onBind(Product product){
         bindProductName(product.productName);
-        bindProductImage(product.imageUrlList.lowResolution);
-        bindProductPrice(product.productSellingPrice.amount);
+        bindProductImage(product.imageUrlList.get(0));
+        bindProductPrice(product.productSellingPrice);
     }
 
     private void bindProductName(String text){

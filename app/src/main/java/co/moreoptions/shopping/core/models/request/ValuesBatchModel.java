@@ -13,18 +13,24 @@ public class ValuesBatchModel {
     @SerializedName("appName")
     public String appName;
 
-    @SerializedName("values")
-    public List<Values> values;
+    @SerializedName("productName")
+    public String productName;
 
     public void setAppName(String appName) {
         this.appName = appName;
     }
 
-    public void setValues(List<Values> values) {
-        this.values = values;
+    public String getAppName() {
+        return appName;
     }
 
+    public String getProductName() {
+        return productName;
+    }
 
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -34,19 +40,19 @@ public class ValuesBatchModel {
         ValuesBatchModel that = (ValuesBatchModel) o;
 
         return Objects.equal(this.appName, that.appName) &&
-                Objects.equal(this.values, that.values);
+                Objects.equal(this.productName, that.productName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(appName, values);
+        return Objects.hashCode(appName, productName);
     }
 
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("appName", appName)
-                .add("values", values)
+                .add("productName", productName)
                 .toString();
     }
 }
