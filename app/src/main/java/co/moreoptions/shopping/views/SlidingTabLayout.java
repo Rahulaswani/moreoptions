@@ -21,6 +21,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import co.moreoptions.shopping.core.models.response.ProductList;
+
 /**
  * Created by anshul on 10/10/15.
  */
@@ -52,6 +54,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
     private  MyTabClickListener mMyTabClickListener;
 
     private int mPosition = 0;
+
+    private ProductList mProductList;
 
     public SlidingTabLayout(Context context) {
         this(context, null);
@@ -140,6 +144,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
         }
     }
 
+    public void setProductList(ProductList productList){
+        mProductList = productList;
+    }
+
     /**
      * Create a default view to be used for tabs. This is called if a custom tab view is not set via
      * {@link #setCustomTabView(int, int)}.
@@ -196,8 +204,20 @@ public class SlidingTabLayout extends HorizontalScrollView {
             }
 
             tabTitleView.setText(adapter.getPageTitle(i));
+            String iconUrl;
+            if(mProductList.getProducts().get(i).appName.contains("Flipkart")) {
+                iconUrl = "http://4.bp.blogspot.com/-TfqM586gaiM/VZo-EqWMB4I/AAAAAAAAC5s/DO2-IrloCBo/s1600/9_Hd8_IHLzv_Ys6_Hl_KH86_Qjvc_PVC97u_SMIc_DGk5_N5bagl_JB2y_JN.png";
+            }
+            else if(mProductList.getProducts().get(i).appName.contains("Amazon")){
+
+                iconUrl = "http://elianeelias.com/coda/wp-content/uploads/2013/05/Amazon-icon.png";
+            }
+            else {
+                iconUrl = "http://elianeelias.com/coda/wp-content/uploads/2013/05/Amazon-icon.png";
+            }
+
             DraweeController heroController = Fresco.newDraweeControllerBuilder()
-                    .setUri(Uri.parse("http://4.bp.blogspot.com/-TfqM586gaiM/VZo-EqWMB4I/AAAAAAAAC5s/DO2-IrloCBo/s1600/9_Hd8_IHLzv_Ys6_Hl_KH86_Qjvc_PVC97u_SMIc_DGk5_N5bagl_JB2y_JN.png"))
+                    .setUri(Uri.parse(iconUrl))
                     .build();
             appImage.setController(heroController);
 
