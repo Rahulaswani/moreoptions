@@ -13,11 +13,14 @@ public class Product implements Serializable{
     @SerializedName("productName")
     public String productName;
 
+    @SerializedName("productURL")
+    public String productUrl;
+
     @SerializedName("productSellingPrice")
     public String productSellingPrice;
 
-    @SerializedName("productImageUrls")
-    public List<String> imageUrlList;
+    @SerializedName("productImage")
+    public List<ProductImage> imageUrlList;
 
     @SerializedName("appName")
     public String appName;

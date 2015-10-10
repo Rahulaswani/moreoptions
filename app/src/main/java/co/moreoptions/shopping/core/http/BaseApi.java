@@ -13,6 +13,6 @@ import retrofit.http.PUT;
  */
 public interface BaseApi {
 
-    @PUT("/put")
+    @PUT("/moreoptions/")
     void putValues(@Body ValuesBatchModel valuesBatchModel, Callback<List<Product>> callback);
 }

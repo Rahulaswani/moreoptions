@@ -34,7 +34,7 @@ android {
             versionNameSuffix '-debug'
             buildConfigField "boolean", "DEBUG_MODE", "true"
             buildConfigField "boolean", "ENABLE_MIXPANEL", "false"
-            buildConfigField "boolean", "ENABLE_CRASHYLICS","true"
+            buildConfigField "boolean", "ENABLE_CRASHYLICS","false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }

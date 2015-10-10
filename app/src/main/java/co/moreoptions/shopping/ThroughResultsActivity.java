@@ -4,29 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.facebook.appevents.AppEventsLogger;
+import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.leanplum.Leanplum;
+import com.leanplum.LeanplumPushService;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.moreoptions.shopping.analytics.MixpanelAnalytics;
-import co.moreoptions.shopping.app.MOLog;
 import co.moreoptions.shopping.core.ReadDataService;
-import com.crashlytics.android.Crashlytics;
-import com.facebook.appevents.AppEventsLogger;
-
-import com.leanplum.Leanplum;
-import com.leanplum.LeanplumPushService;
-import com.mixpanel.android.mpmetrics.MixpanelAPI;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import co.moreoptions.shopping.core.models.response.ProductList;
-import io.fabric.sdk.android.Fabric;
+import co.moreoptions.shopping.views.ProductListPopupSheet;
 
 public class ThroughResultsActivity extends Activity {
 
@@ -34,16 +27,16 @@ public class ThroughResultsActivity extends Activity {
 
     private ReadDataService readDataService;
 
-    private ProductAdapter productAdapter;
-
-    @InjectView(R.id.productRack)
-    RecyclerView productRack;
+    @InjectView(R.id.bottomsheet)
+    BottomSheetLayout bottomSheetLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+
         Intent serviceIntent = new Intent(this, ReadDataService.class);
         startService(serviceIntent);
         readDataService = ReadDataService.getSharedInstance();
@@ -78,12 +71,26 @@ public class ThroughResultsActivity extends Activity {
         if(productList == null || productList.getProducts() == null){
             return;
         }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.
-                HORIZONTAL, false);
-        productAdapter = new ProductAdapter(productList.getProducts());
-        productRack.setLayoutManager(linearLayoutManager);
-        productRack.addItemDecoration(new ItemSpacingDecoration(11));
-        productRack.setAdapter(productAdapter);
+
+        if(productList.getProducts().size() > 0) {
+            final ProductListPopupSheet productListPopupSheet = new ProductListPopupSheet(this, productList);
+
+            bottomSheetLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    bottomSheetLayout.showWithSheetView(productListPopupSheet);
+                    bottomSheetLayout.setOnSheetStateChangeListener(new BottomSheetLayout.OnSheetStateChangeListener() {
+                        @Override
+                        public void onSheetStateChanged(BottomSheetLayout.State state) {
+                            if (state == BottomSheetLayout.State.HIDDEN) {
+                                finish();
+                            }
+                        }
+                    });
+                }
+            }, 1000);
+        }
+
     }
 
     @Override

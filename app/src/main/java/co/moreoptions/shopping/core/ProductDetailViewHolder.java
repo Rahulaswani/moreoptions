@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.moreoptions.shopping.R;
 import co.moreoptions.shopping.core.models.response.Product;
+import co.moreoptions.shopping.core.models.response.ProductImage;
 
 /**
  * Created by anshul on 11/09/15.
@@ -45,10 +46,11 @@ public class ProductDetailViewHolder extends RecyclerView.ViewHolder{
         productName.setText(text);
     }
 
-    private void bindProductImage(String uri){
+    private void bindProductImage(ProductImage image){
         DraweeController heroController = Fresco.newDraweeControllerBuilder()
-                .setUri(Uri.parse(uri))
+                .setUri(Uri.parse(image.url))
                 .build();
+        productImage.setAspectRatio(image.getAspectRatio());
         productImage.setController(heroController);
     }
 

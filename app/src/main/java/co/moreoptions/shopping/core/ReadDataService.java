@@ -21,10 +21,12 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 import co.moreoptions.shopping.R;
 import co.moreoptions.shopping.ThroughResultsActivity;
+import co.moreoptions.shopping.Utils.AppConstants;
 import co.moreoptions.shopping.core.http.RequestListener;
 import co.moreoptions.shopping.core.models.response.Product;
 import co.moreoptions.shopping.core.models.response.ProductList;
@@ -51,6 +53,8 @@ public class ReadDataService extends AccessibilityService {
 
     private WindowManager windowManager;
     private FloatingActionButton mFloatingActionButton;
+
+    private HashMap<String, String> mIdProductMap;
 
     /**
      * {@inheritDoc}
@@ -94,6 +98,7 @@ public class ReadDataService extends AccessibilityService {
         windowManager.addView(mFloatingActionButton, params);
         mFloatingActionButton.setVisibility(View.GONE);
 
+
     }
 
     public static ReadDataService getSharedInstance() {
@@ -133,7 +138,8 @@ public class ReadDataService extends AccessibilityService {
         String taskStr = taskLabel.toString();
 
         Log.d(LOG_TAG, taskStr);
-        if (mValueBatchHelper.checkForBatchStart(source.getViewIdResourceName())) {
+        if (mValueBatchHelper.checkForBatchStart(source.getViewIdResourceName(),
+                source.getPackageName().toString())) {
             mFloatingActionButton.setVisibility(View.VISIBLE);
             mValueBatchHelper.setIsBatching(true);
             checkContent(source.getPackageName().toString(),

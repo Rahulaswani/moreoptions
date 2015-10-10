@@ -1,8 +1,10 @@
 package co.moreoptions.shopping.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import co.moreoptions.shopping.Utils.AppConstants;
 import co.moreoptions.shopping.core.models.request.Values;
 import co.moreoptions.shopping.core.models.request.ValuesBatchModel;
 
@@ -13,8 +15,13 @@ public class ValueBatchHelper {
     private ValuesBatchModel mValueBatchModel = new ValuesBatchModel();
     private boolean isBatching;
     private boolean shouldBatch = true;
+    private HashMap<String, String> mIdProductMap;
 
-    public void ValuesBatchModel(){
+    public ValueBatchHelper(){
+
+        //get all ID-PRODUCT values
+        AppConstants appConstants = new AppConstants();
+        mIdProductMap = appConstants.getmIdProductMap();
     }
 
     public boolean isBatching() {
@@ -33,14 +40,25 @@ public class ValueBatchHelper {
         this.isBatching = isBatching;
     }
 
-    public boolean checkForBatchStart(String viewId){
-        if(viewId != null && viewId.contains("product_page_title_main_title") && getShouldbatch()){
-            setIsBatching(true);
-            return isBatching;
+    public boolean checkForBatchStart(String viewId, String appName){
+
+        switch (appName){
+            case "com.flipkart.android":
+                if(viewId != null && viewId.contains(mIdProductMap.get(appName)) && getShouldbatch()){
+                    setIsBatching(true);
+                    return isBatching;
+                }
+                break;
+            case "com.myntra.android":
+                if(viewId != null && viewId.contains(mIdProductMap.get(appName)) && getShouldbatch()){
+                    setIsBatching(true);
+                    return isBatching;
+                }
+                break;
+            default:
+                return false;
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     public void addValue(String appName, String value){
