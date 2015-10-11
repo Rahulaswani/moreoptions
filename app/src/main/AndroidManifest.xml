@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
     <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
     <permission android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -54,6 +55,10 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/read_data_config" />
         </service>
+
+        <service
+            android:name=".core.FloatingHeadService"
+            android:exported="false"/>
         <!--DO NOT TOUCH THIS : let the key be here if you will move it will not build rahul has tried this-->
         <meta-data
             android:name="io.fabric.ApiKey"

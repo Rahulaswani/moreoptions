@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<com.getbase.floatingactionbutton.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/pink_icon"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom|end"
-    fab:fab_colorNormal="@color/pink"
-    fab:fab_colorPressed="@color/pink_pressed"
-    fab:fab_icon="@drawable/ic_fab_star" />
+    android:layout_height="wrap_content">
+
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/floating_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        fresco:placeholderImageScaleType="centerCrop"
+        fresco:roundAsCircle="true"
+        fresco:roundedCornerRadius="30dp" />
+</FrameLayout>
