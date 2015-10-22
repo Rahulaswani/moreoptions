@@ -73,7 +73,7 @@ public class FloatingHeadService extends Service implements FloatingViewListener
         try {
             Uri uri = new Uri.Builder()
                     .scheme(UriUtil.LOCAL_RESOURCE_SCHEME) // "res"
-                    .path(String.valueOf(R.drawable.round_fab_button))
+                    .path(String.valueOf(R.drawable.options_logo_fab_button))
                     .build();
             DraweeController heroController = Fresco.newDraweeControllerBuilder()
                     .setUri(uri)

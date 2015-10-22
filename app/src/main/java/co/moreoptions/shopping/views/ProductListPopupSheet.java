@@ -94,7 +94,7 @@ public class ProductListPopupSheet extends FrameLayout {
                 mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
                 mSlidingTabLayout.setProductList(mProductList);
                 mSlidingTabLayout.setCustomTabView(R.layout.tab_home, R.id.label_tab, R.id.app_image);
-                mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.blue));
+                mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.primary_red));
                 mSlidingTabLayout.setDistributeEvenly(true);
                 mSlidingTabLayout.setViewPager(mPager);
 

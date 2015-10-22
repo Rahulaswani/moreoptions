@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black_semi_transparent">#B2000000</color>
-    <color name="background">#e5e5e5</color>
-    <color name="half_black">#808080</color>
-    <color name="white">#fafafa</color>
-    <color name="white_pressed">#f1f1f1</color>
-    <color name="pink">#e91e63</color>
-    <color name="pink_pressed">#ec407a</color>
-    <color name="blue">#028AFB</color>
-    <color name="blue_semi_transparent">#805677fc</color>
-    <color name="blue_semi_transparent_pressed">#80738ffe</color>
+    <color name="primary_red">#EF5350</color>
+    <color name="primary_dark_red">#E53935</color>
+    <color name="primary_light">#FFCDD2</color>
+    <color name="accent">#FFCA28</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="white">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
 </resources>
+
+    <!-- opacity values
+    0% = #00
+    10% = #16
+    20% = #32
+    30% = #48
+    40% = #64
+    50% = #80
+    60% = #96
+    70% = #112
+    80% = #128
+    90% = #144
+
+    Dark text on light backgrounds #000000
+
+    For dark text on light backgrounds, the most important text has an opacity of 87%. Secondary text, which is lower in the visual hierarchy, has an opacity of 54%. Text hints, like those in text fields and labels, and disabled text have even lower visual prominence with an opacity of 38%.
+
+    similarly for white text on dark background with #FFFFFF
+
+    Hint and disabled text and icons have an opacity of 38% for dark content on light backgrounds, and an opacity of 30% for white content on dark backgrounds. -->
+
