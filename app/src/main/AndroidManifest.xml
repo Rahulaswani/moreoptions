@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.moreoptions.shopping" >
+    package="co.moreoptions.shopping"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <uses-sdk android:targetSdkVersion="21" android:minSdkVersion="14"
+        tools:overrideLibrary="android.support.customtabs" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -42,7 +46,11 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.leanplum.LeanplumPushService" />
+        <activity
+            android:name=".CustomTabs.OpenWebsite"
+            android:label="@string/app_name" >
+        </activity>
+
 
         <service android:name=".core.ReadDataService"
             android:label="@string/accessibility_query_window_description"

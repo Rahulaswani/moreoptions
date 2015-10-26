@@ -1,25 +1,106 @@
 <resources>
-    <string name="app_name">Shopping</string>
+    <string name="app_name">Options</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="accessibility_query_window_description">More Options</string>
 
-     TODO : this has to be cleared as in old chode this was being used
+     TODO : this has to be cleared as in old code this was being used
 
     <!--<string name="accessibility_query_window_description">App Accessibility Service</string>-->
     <string name="mixipanel_token">7feec71280e4cf5dbddcb179dda380e0</string>
     <string name="facebook_app_id">1640167976239972</string>
 
-    <string-array name="packages_array">
-       <!-- <item>com.whatsapp</item>-->
+    <string-array name="supported_app_packages_array">
         <item>in.amazon.mShop.android.shopping</item>
         <item>com.roposo.android</item>
         <item>com.flipkart.android</item>
+        <item>com.snapdeal.main</item>
+        <item>com.jabong.android</item>
+        <item>com.app.wooplr</item>
+        <item>com.shopclues</item>
+        <item>com.myntra.android</item>
+        <item>com.yebhi</item>
+        <item>net.one97.paytm</item>
+        <item>com.shopping.limeroad</item>
+        <item>com.yepme</item>
+        <item>com.infibeam.infibeamapp</item>
+        <item>com.zopperapp</item>
+        <item>in.shoppingwish.scandid</item>
+        <item>com.couponrani.android</item>
+        <item>com.mob91</item>
+        <item>com.ebay.mobile</item>
+        <item>com.app.buyhatke</item>
+        <item>com.homeshop18.activity</item>
+        <item>com.voonik.android</item>
+        <item>com.cabsguru</item>
+        <item>com.olacabs.customer</item>
+        <item>com.ubercab</item>
+        <item>com.winit.merucab</item>
+        <item>com.tfs.consumer</item>
+        <item>com.megacabs</item>
+        <item>com.ixigo.cabs</item>
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <string-array name="app_with_everything_names_array">
+        <item>Amazon</item>
+        <item>flipkart</item>
+        <item>Snapdeal</item>
+        <item>Paytm</item>
+        <item>Ebay</item>
+        <item>Shopclues</item>
+        <item>Infibeam</item>
+        <item>HomeShop1</item>
+    </string-array>
+
+    <string-array name="fasion_app_names_array">
+        <item>Myntra</item>
+        <item>Jabong</item>
+        <item>LImeroad</item>
+        <item>Yempe</item>
+        <item>wooplr</item>
+        <item>roposo</item>
+        <item>Voonik</item>
+        <item>Yebhi</item>
+    </string-array>
+
+    <string-array name="electronics_app_names_array">
+        <item>Zopper</item>
+        <item>BuyingIQ</item>
+    </string-array>
+
+    <string-array name="aggregator_apps_names_array">
+        <item>91Mobiles</item>
+        <item>Scandid</item>
+        <item>CouponRani</item>
+        <item>BuyHatke</item>
+    </string-array>
+
+    <string-array name="cab_apps_names_array">
+        <item>cabsguru</item>
+        <item>ola</item>
+        <item>uber</item>
+        <item>meru</item>
+        <item>tfs</item>
+        <item>mega</item>
+    </string-array>
+
+    <!-- sharing widget texts -->
+    <string name="text_twitter">Twitter</string>
+    <string name="twitter_not_found">We could not find Twitter installed on your device</string>
+    <string name="twitter_share_text">"Hey Checkout Options. It provides you better options when you shop"</string>
+    <string name="twitter_share_suffix">Happy Shopping! #iHaveOptions</string>
+    <string name="text_whatsapp">Whatsapp</string>
+    <string name="whatsapp_not_installed">We could not find Whatsapp installed on your device</string>
+    <string name="fbmessenger_not_found">We could not find Messenger installed on your device</string>
+    <string name="text_facebook">Facebook</string>
+    <string name="share_text">Hey Checkout Options. It provides you better options when you shop</string>
+    <string name="share_text_url">"www.moreoptions.co/sh"</string>
+    <string name="share_text_suffix">Happy Shopping! #iHaveOptions</string>
+
+
+    <!-- TODO: Remove or r text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

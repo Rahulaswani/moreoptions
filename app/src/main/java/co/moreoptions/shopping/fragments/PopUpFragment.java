@@ -4,12 +4,13 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsClient;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import co.moreoptions.shopping.CustomTabs.OpenWebsite;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -17,9 +18,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.moreoptions.shopping.R;
+import co.moreoptions.shopping.CustomTabs.ServiceConnectionCallback;
+import co.moreoptions.shopping.Utils.AppConstants;
 import co.moreoptions.shopping.core.models.response.Product;
 
-public class PopUpFragment extends Fragment {
+public class PopUpFragment extends Fragment implements View.OnClickListener, ServiceConnectionCallback {
 
     private Product mProduct;
 
@@ -89,14 +92,41 @@ public class PopUpFragment extends Fragment {
         productName.setText(mProduct.productName);
         priceDiffText.setText(mProduct.productSellingPrice);
 
-        buyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(mProduct.productUrl));
-                startActivity(i);
-            }
-        });
+        buyButton.setOnClickListener(this);
+
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.buyButton:
+                Intent launchAppIntent = new Intent(getActivity(),OpenWebsite.class);
+                launchAppIntent.putExtra(AppConstants.URL_TO_LAUNCH,mProduct.productUrl);
+                this.startActivity(launchAppIntent);
+                break;
+        }
+    }
+
+    /**
+     * Called when the service is connected.
+     *
+     * @param client a CustomTabsClient
+     */
+    @Override
+    public void onServiceConnected(CustomTabsClient client) {
+
+    }
+
+    /**
+     * Called when the service is disconnected.
+     */
+    @Override
+    public void onServiceDisconnected() {
 
     }
 }
